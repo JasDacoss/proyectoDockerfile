@@ -1,0 +1,8 @@
+# Utilizar la imagen base de Apache
+FROM httpd:latest
+
+# Copiar los archivos de la carpeta 'web' al directorio '/usr/local/apache2/htdocs/' del contenedor
+COPY ./web/ /usr/local/apache2/htdocs/
+
+# Exponer el puerto 80 para acceder a la página web desde el host
+EXPOSE 80

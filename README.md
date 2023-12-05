@@ -57,3 +57,53 @@ Ahora podemos probar la imagen ejecutando los contenedores:
 $ docker run -it jasdacoss/cliente_ubuntu:22.04
 $ docker run -it damiannogueiras/cliente_ubuntu:red
 ```
+
+## Imagen de Apache
+Primero creamos una carpeta llamada `web` en el directorio donde tenemos nuestro archivo `Dockerfile_apache`.
+
+Dentro de la carpeta `web`, colocamos los archivos de nuestra página web personalizada, por ejemplo, un archivo `index.html` y cualquier otro archivo necesario para nuestra página (imágenes, CSS, JavaScript, etc.).
+
+El contenido de la carpeta `web` se verá algo así:
+
+```
+web/
+├── index.html
+├── style.css
+└── ira.jpg
+```
+
+Abrimos el archivo `Dockerfile_apache` y agregamos lo siguiente:
+
+```Dockerfile
+# Utilizar la imagen base de Apache
+FROM httpd:latest
+
+# Copiar los archivos de la carpeta 'web' al directorio '/usr/local/apache2/htdocs/' del contenedor
+COPY ./web/ /usr/local/apache2/htdocs/
+
+# Exponer el puerto 80 para acceder a la página web desde el host
+EXPOSE 80
+```
+
+Ejecutamos el siguiente comando para construir la imagen:
+
+```bash
+$ docker build -t apache:2 -f Dockerfile_apache .
+```
+
+Esto creará una imagen con el nombre `apache:2`.
+
+Una vez que la imagen se haya construido, podemos ejecutar un contenedor basado en esta imagen utilizando el siguiente comando:
+
+```bash
+$ docker run -d -p 8080:80 apache:2
+```
+
+Esto ejecutará un contenedor basado en la imagen `apache:2` y mapeará el puerto `8080` del host al puerto `80` del contenedor.
+
+Accedemos a la página web personalizada en nuestro navegador utilizando la siguiente URL:
+
+```
+http://localhost:8080/index.html
+```
+
